@@ -1,3 +1,7 @@
-package tron
+package main
 
-var X = "X"
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, world")
+}
