@@ -8,6 +8,8 @@ func doServerStuff() {
 
 func doClientStuff() {
     termbox.Init()
+    defer termbox.Close()
+
 }
 
 func main() {
