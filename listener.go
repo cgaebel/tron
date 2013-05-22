@@ -20,7 +20,7 @@ type Controller struct {
 	currentDirection Direction
 }
 
-func (c Controller) Send(g tron.GridT) {
+func (c Controller) Send(g GridT) {
     
 }
 
