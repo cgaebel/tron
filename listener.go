@@ -1,4 +1,4 @@
-package tronlistener
+package main
 
 import (
 	"net"
@@ -18,6 +18,10 @@ const (
 type Controller struct {
 	conn             net.Conn
 	currentDirection Direction
+}
+
+func (c Controller) Send(g tron.GridT) {
+    
 }
 
 func (c Controller) read() {
