@@ -1,3 +1,6 @@
-package tron
+package main
 
-var X = "X"
+import ()
+
+func main() {
+}
