@@ -21,7 +21,11 @@ type Controller struct {
 }
 
 func (c Controller) Send(g GridT) {
-    
+    for line := range g {
+        c.conn.Write([]byte(string(line)))
+        c.conn.Write([]byte("\r\n"))
+    }
+    c.conn.Write([]byte("\r\n"))
 }
 
 func (c Controller) read() {
