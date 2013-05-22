@@ -25,6 +25,7 @@ type Player struct {
 }
 
 func (p *Player) Die() {
+	Grid.ClearSymbol(symbol)
 	p.DeathCount += 1
 }
 
@@ -36,6 +37,16 @@ func (g *GridT) IsEmpty(p Pos) bool {
 
 func (g *GridT) SetCellValue(p Pos, val rune) {
 	g[p.Y][p.X] = val
+}
+
+func (g *GridT) ClearSymbol(symbol rune) {
+	for y := 0; y < Height; y++ {
+		for x := 0; x < Width; x++ {
+			if Grid[y][x] == symbol {
+				Grid[y][x] = Empty
+			}
+		}
+	}
 }
 
 func (g *GridT) GetStartingVector() (pos Pos, dir Pos) {
@@ -111,8 +122,9 @@ func AddPlayer() rune {
 	return p.Symbol
 }
 
-func RemovePlayer() {
-
+func RemovePlayer(symbol rune) {
+	Grid.ClearSymbol(symbol)
+	delete(Players, symbol)
 }
 
 func Step() {
@@ -120,6 +132,11 @@ func Step() {
 		p.TickCount += 1
 
 		p.HeadPos.Add(p.HeadDir)
+
+		// wrap the pos
+		p.HeadPos.X = p.HeadPos.X % Width
+		p.HeadPos.Y = p.HeadPos.Y % Height
+
 		if Grid.IsEmpty(p.HeadPos) {
 			Grid.SetCellValue(p.HeadPos, p.Symbol)
 		} else {
