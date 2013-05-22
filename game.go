@@ -65,10 +65,12 @@ func (g *GridT) GetStartingVector() (pos Pos, dir Pos) {
 	pos.X = rand.Intn(Width)
 	pos.Y = rand.Intn(Height)
 
+	dirBits := rand.Int()
+
 	// pick a random direction
 	// chosen by fair dice roll
-	dir.X = 1
-	dir.Y = 0
+	dir.X = dirBits & 1
+	dir.Y = ^(dirBits & 1)
 
 	// increment until safe
 	for !g.IsEmpty(pos) {

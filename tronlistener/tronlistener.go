@@ -69,7 +69,7 @@ func AcceptController(l net.Listener) (c Controller, err error) {
     if err != nil {
         return
     }
-    
+
     go c.read()
-    return 
+    return
 }
