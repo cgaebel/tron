@@ -1,7 +1,6 @@
 package tronlistener
 
 import (
-	"fmt"
 	"net"
 	"sync/atomic"
 )
@@ -28,15 +27,10 @@ func (c Controller) read() {
         if err != nil {
             break
         }
-        switch Direction(buf[0]) {
-        case North:
-            fmt.Println("North")
-        case South:
-            fmt.Println("South")
-        case East:
-            fmt.Println("East")
-        case West:
-            fmt.Println("West")
+        d := Direction(buf[0])
+        switch d {
+        case North, South, East, West:
+            c.SetCurrentDirection(d)
         }
     }
 }
