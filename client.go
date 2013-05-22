@@ -1,7 +1,5 @@
 package main
 
-import "github.com/nsf/termbox-go"
-
 const (
 	width  = 80
 	height = 24
@@ -32,8 +30,4 @@ func (client *Client) drawHorizWalls() {
 func (client *Client) drawGrid() {
 	client.drawVertWalls()
 	client.drawHorizWalls()
-}
-
-func (client *Client) Tick(event termbox.Event) {
-	client.drawGrid()
 }
