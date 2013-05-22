@@ -29,18 +29,18 @@ func (c Controller) Send(g GridT) {
 }
 
 func (c Controller) read() {
-    buf := make([]byte, 1)
-    for {
-        _, err := c.conn.Read(buf)
-        if err != nil {
-            break
-        }
-        d := Direction(buf[0])
-        switch d {
-        case North, South, East, West:
-            c.SetCurrentDirection(d)
-        }
-    }
+	buf := make([]byte, 1)
+	for {
+		_, err := c.conn.Read(buf)
+		if err != nil {
+			break
+		}
+		d := Direction(buf[0])
+		switch d {
+		case North, South, East, West:
+			c.SetCurrentDirection(d)
+		}
+	}
 }
 
 func (c Controller) CurrentDirection() (d Direction) {
@@ -53,25 +53,25 @@ func (c Controller) SetCurrentDirection(d Direction) {
 }
 
 func AcceptController(l net.Listener) (c Controller, err error) {
-    var conn net.Conn
-    conn, err = l.Accept()
-    if err != nil {
-        return
-    }
-    c = Controller{
-        conn:conn,
-    }
-    // SB IAC WILL SGA  
-    _, err = c.conn.Write([]byte{250, 255, 251, 3, 240})
-    if err != nil {
-        return
-    }
-    // SB IAC WILL ECHO
-    _, err = c.conn.Write([]byte{250, 255, 251, 1, 240})
-    if err != nil {
-        return
-    }
-    
-    go c.read()
-    return 
+	var conn net.Conn
+	conn, err = l.Accept()
+	if err != nil {
+		return
+	}
+	c = Controller{
+		conn: conn,
+	}
+	// SB IAC WILL SGA
+	_, err = c.conn.Write([]byte{250, 255, 251, 3, 240})
+	if err != nil {
+		return
+	}
+	// SB IAC WILL ECHO
+	_, err = c.conn.Write([]byte{250, 255, 251, 1, 240})
+	if err != nil {
+		return
+	}
+
+	go c.read()
+	return
 }

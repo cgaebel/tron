@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math/rand"
 )
 
@@ -42,6 +43,15 @@ func (p *Player) Die() {
 
 type GridT [Height][Width]rune
 
+func (g *GridT) Debug() {
+	for y := 0; y < Height; y++ {
+		for x := 0; x < Width; x++ {
+			fmt.Printf("%c", Grid[y][x])
+		}
+		fmt.Print("\n")
+	}
+}
+
 func (g *GridT) IsEmpty(p Pos) bool {
 	return g[p.Y][p.X] == Empty
 }
@@ -65,10 +75,12 @@ func (g *GridT) GetStartingVector() (pos Pos, dir Pos) {
 	pos.X = rand.Intn(Width)
 	pos.Y = rand.Intn(Height)
 
+	dirBits := rand.Int()
+
 	// pick a random direction
 	// chosen by fair dice roll
-	dir.X = 1
-	dir.Y = 0
+	dir.X = dirBits & 1
+	dir.Y = ^(dirBits & 1)
 
 	// increment until safe
 	for !g.IsEmpty(pos) {
@@ -84,7 +96,7 @@ func (g *GridT) GetStartingVector() (pos Pos, dir Pos) {
 	return
 }
 
-func Init() {
+func init() {
 	Players = make(map[*Player]bool)
 
 	for y := 0; y < Height; y++ {
