@@ -25,7 +25,7 @@ type Player struct {
 }
 
 func (p *Player) Die() {
-	Grid.ClearSymbol(p.symbol)
+	Grid.ClearSymbol(p.Symbol)
 	p.DeathCount += 1
 }
 
