@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math/rand"
 )
 
@@ -41,6 +42,15 @@ func (p *Player) Die() {
 }
 
 type GridT [Height][Width]rune
+
+func (g *GridT) Debug() {
+	for y := 0; y < Height; y++ {
+		for x := 0; x < Width; x++ {
+			fmt.Printf("%c", Grid[y][x])
+		}
+		fmt.Print("\n")
+	}
+}
 
 func (g *GridT) IsEmpty(p Pos) bool {
 	return g[p.Y][p.X] == Empty
@@ -84,7 +94,7 @@ func (g *GridT) GetStartingVector() (pos Pos, dir Pos) {
 	return
 }
 
-func Init() {
+func init() {
 	Players = make(map[*Player]bool)
 
 	for y := 0; y < Height; y++ {
