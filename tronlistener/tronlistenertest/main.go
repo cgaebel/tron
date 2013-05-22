@@ -10,18 +10,18 @@ func main() {
     if err != nil {
         panic(err)
     }
-    
+
     listener, err := net.ListenTCP("tcp", laddr)
     if err != nil {
         panic(err)
     }
-    
+
     c, err := tronlistener.AcceptController(listener)
     if err != nil {
         panic(err)
     }
-    
+
     _ = c
-    
+
     select{}
 }
