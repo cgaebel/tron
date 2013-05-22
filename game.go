@@ -110,6 +110,10 @@ func RemovePlayer(symbol rune) {
 	delete(Players, symbol)
 }
 
+func (p *Player) ChangeDirection(dir Pos) {
+    p.HeadDir = dir
+}
+
 func Step() {
 	for _, p := range Players {
 		p.TickCount += 1
