@@ -12,6 +12,7 @@ type Client struct {
 
 func drawWallPanel(x, y int) {
 	termbox.SetCell(x, y, '#', termbox.ColorBlack, termbox.ColorDefault)
+	termbox.SetCell(x, y, '#', termbox.ColorWhite, termbox.ColorDefault)
 }
 
 func drawVertWalls() {
