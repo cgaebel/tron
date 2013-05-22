@@ -2,7 +2,6 @@ package main
 
 const ClockSpeed = 30
 
-
 type Pos struct {
 	X int
 	Y int
@@ -14,12 +13,12 @@ func (p *Pos) Add(other Pos) {
 }
 
 type Player struct {
-	Symbol rune
-	HeadPos Pos
-	HeadDir Pos
+	Symbol     rune
+	HeadPos    Pos
+	HeadDir    Pos
 	DeathCount int
-	TickCount int
-	Name string
+	TickCount  int
+	Name       string
 }
 
 type GridT [Height][Width]rune
@@ -34,8 +33,9 @@ func (g *GridT) SetCellValue(p Pos, val rune) {
 
 // 80x24
 const Empty = rune(32)
-const Width = 80;
-const Height = 24;
+const Width = 80
+const Height = 24
+
 var Grid GridT
 
 var Players []Player
