@@ -8,32 +8,32 @@ const (
 )
 
 type Client struct {
+	toDisplay [width][height]rune
 }
 
-func drawWallPanel(x, y int) {
-	termbox.SetCell(x, y, '#', termbox.ColorBlack, termbox.ColorDefault)
-	termbox.SetCell(x, y, '#', termbox.ColorWhite, termbox.ColorDefault)
+func (client *Client) drawWallPanel(x, y int) {
+	client.toDisplay[x][y] = '#'
 }
 
-func drawVertWalls() {
+func (client *Client) drawVertWalls() {
 	for i := 0; i < height; i++ {
-		drawWallPanel(0, i)
-		drawWallPanel(width, i)
+		client.drawWallPanel(0, i)
+		client.drawWallPanel(width, i)
 	}
 }
 
-func drawHorizWalls() {
+func (client *Client) drawHorizWalls() {
 	for i := 0; i < width; i++ {
-		drawWallPanel(i, 0)
-		drawWallPanel(i, height)
+		client.drawWallPanel(i, 0)
+		client.drawWallPanel(i, height)
 	}
 }
 
-func drawGrid() {
-	drawVertWalls()
-	drawHorizWalls()
+func (client *Client) drawGrid() {
+	client.drawVertWalls()
+	client.drawHorizWalls()
 }
 
 func (client *Client) Tick(event termbox.Event) {
-	drawGrid()
+	client.drawGrid()
 }
