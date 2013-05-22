@@ -4,7 +4,7 @@ import (
 	"math/rand"
 )
 
-const ClockSpeed = 30
+const TickMs = 500 // milliseconds
 
 type Pos struct {
 	X int
@@ -80,12 +80,12 @@ const Height = 24
 
 var Grid GridT
 
-var Players map[rune]Player
+var Players map[rune]*Player
 
 var NextSymbol = 'A'
 
 func Init() {
-	Players = make(map[rune]Player)
+	Players = make(map[rune]*Player)
 
 	for y := 0; y < Height; y++ {
 		for x := 0; x < Width; x++ {
@@ -101,13 +101,18 @@ func AddPlayer() rune {
 
 	p.HeadPos, p.HeadDir = Grid.GetStartingVector()
 
-	Players[p.Symbol] = *p
+	Players[p.Symbol] = p
 	return p.Symbol
 }
 
 func RemovePlayer(symbol rune) {
 	Grid.ClearSymbol(symbol)
 	delete(Players, symbol)
+}
+
+func PlayerChangeDirection(symbol rune, dir Pos) {
+	p := Players[symbol]
+	p.HeadDir = dir
 }
 
 func Step() {
