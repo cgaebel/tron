@@ -28,8 +28,15 @@ func (c Controller) read() {
         if err != nil {
             break
         }
-        switch buf[0] {
-        // here, check if it's one of the arrow keys. if so, set direction.   
+        switch Direction(buf[0]) {
+        case North:
+            fmt.Println("North")
+        case South:
+            fmt.Println("South")
+        case East:
+            fmt.Println("East")
+        case West:
+            fmt.Println("West")
         }
     }
 }
@@ -52,6 +59,17 @@ func AcceptController(l net.Listener) (c Controller, err error) {
     c = Controller{
         conn:conn,
     }
+    // SB IAC WILL SGA  
+    _, err = c.conn.Write([]byte{250, 255, 251, 3, 240})
+    if err != nil {
+        return
+    }
+    // SB IAC WILL ECHO
+    _, err = c.conn.Write([]byte{250, 255, 251, 1, 240})
+    if err != nil {
+        return
+    }
+    
     go c.read()
     return 
 }
