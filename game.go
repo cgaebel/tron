@@ -7,6 +7,7 @@ import (
 )
 
 const TickMs = 500
+
 var Tick = make(chan bool)
 
 // 80x24
