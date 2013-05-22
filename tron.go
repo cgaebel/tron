@@ -21,7 +21,8 @@ func doClientStuff() {
 	client := new(Client)
 
 	for {
-		client.Tick()
+        event := termbox.PollEvent()
+		client.Tick(event)
 		termbox.Flush()
         time.Sleep(1)
 	}

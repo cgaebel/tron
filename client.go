@@ -33,6 +33,6 @@ func drawGrid() {
     drawHorizWalls()
 }
 
-func (client *Client) Tick() {
+func (client *Client) Tick(event termbox.Event) {
     drawGrid()
 }
