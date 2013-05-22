@@ -20,7 +20,12 @@ func doClientStuff() {
 	client := new(Client)
 
 	for {
-        event := termbox.PollEvent()
+		event := termbox.PollEvent()
+
+		if event.Type == termbox.EventError {
+			panic(event.Err)
+		}
+
 		client.Tick(event)
 		termbox.Flush()
 	}
