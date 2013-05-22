@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"github.com/nsf/termbox-go"
+    "time"
 )
 
 func doServerStuff() {
@@ -22,6 +23,7 @@ func doClientStuff() {
 	for {
 		client.Tick()
 		termbox.Flush()
+        time.Sleep(1)
 	}
 }
 
