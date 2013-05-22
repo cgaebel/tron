@@ -25,7 +25,7 @@ type Player struct {
 }
 
 func (p *Player) Die() {
-	Grid.ClearSymbol(p.Symbol)
+	Grid.ClearSymbol(symbol)
 	p.DeathCount += 1
 }
 
@@ -84,20 +84,6 @@ var Players map[rune]Player
 
 var NextSymbol = 'A'
 
-func drawVertWalls() {
-	for y := 0; y < Height; y++ {
-		Grid[y][0] = '#'
-		Grid[y][Width-1] = '#'
-	}
-}
-
-func drawHorizWalls() {
-	for x := 0; x < Width; x++ {
-		Grid[0][x] = '#'
-		Grid[Height-1][x] = '#'
-	}
-}
-
 func Init() {
 	Players = make(map[rune]Player)
 
@@ -106,9 +92,6 @@ func Init() {
 			Grid[y][x] = Empty
 		}
 	}
-
-	drawVertWalls()
-	drawHorizWalls()
 }
 
 func AddPlayer() rune {
