@@ -9,13 +9,13 @@ const TickMs = 500 // milliseconds
 const Empty = ' '
 const Width = 80
 const Height = 24
+
 var Grid GridT
 
 // this is a set. bool is a dummy value
 var Players map[*Player]bool
 
 var NextSymbol = 'A'
-
 
 type Pos struct {
 	X int
