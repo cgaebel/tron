@@ -7,6 +7,22 @@ import (
 
 type Direction int32
 
+func (d Direction) ToBetterDir() Pos {
+	switch d {
+	case Stopped:
+		return Pos{0, 0}
+	case North:
+		return Pos{0, -1}
+	case East:
+		return Pos{1, 0}
+	case South:
+		return Pos{0, 1}
+	case West:
+		return Pos{-1, 0}
+	}
+	panic("unreachable")
+}
+
 const (
 	Stopped Direction = 0
 	North             = 65

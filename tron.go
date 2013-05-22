@@ -20,7 +20,15 @@ func main() {
 		panic(err)
 	}
 
-	_ = c
+	go Run()
+	p := AddPlayer()
 
-	select {}
+	for {
+		<-Tick
+		Step()
+		dir := c.CurrentDirection()
+		p.SetDirection(dir.ToBetterDir())
+		c.Send(Grid)
+		Grid.Debug()
+	}
 }

@@ -3,9 +3,12 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"time"
 )
 
-const TickMs = 500 // milliseconds
+const TickMs = 500
+var Tick = make(chan bool)
+
 // 80x24
 const Empty = ' '
 const Width = 80
@@ -122,7 +125,7 @@ func (p *Player) Remove() {
 	delete(Players, p)
 }
 
-func (p *Player) ChangeDirection(dir Pos) {
+func (p *Player) SetDirection(dir Pos) {
 	p.HeadDir = dir
 }
 
@@ -141,5 +144,12 @@ func Step() {
 		} else {
 			p.Die()
 		}
+	}
+}
+
+func Run() {
+	for {
+		time.Sleep(TickMs)
+		Tick <- true
 	}
 }
