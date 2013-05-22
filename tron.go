@@ -1,35 +1,37 @@
 package main
 
-import "flag"
-import "github.com/nsf/termbox-go"
+import (
+	"flag"
+	"github.com/nsf/termbox-go"
+)
 
 func doServerStuff() {
 }
 
 func doClientStuff() {
-    err := termbox.Init()
-    if err != nil {
-        panic(err)
-    }
+	err := termbox.Init()
+	if err != nil {
+		panic(err)
+	}
 
-    defer termbox.Close()
-    termbox.HideCursor()
+	defer termbox.Close()
+	termbox.HideCursor()
 
-    client := new(Client)
+	client := new(Client)
 
-    for {
-        client.Tick()
-        termbox.Flush()
-    }
+	for {
+		client.Tick()
+		termbox.Flush()
+	}
 }
 
 func main() {
-    var server = flag.Bool("server", false, "use this flag to start a server, as opposed to a client.")
-    flag.Parse();
+	var server = flag.Bool("server", false, "use this flag to start a server, as opposed to a client.")
+	flag.Parse()
 
-    if *server {
-        doServerStuff()
-    } else {
-        doClientStuff()
-    }
+	if *server {
+		doServerStuff()
+	} else {
+		doClientStuff()
+	}
 }
