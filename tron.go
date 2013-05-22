@@ -15,8 +15,10 @@ func doClientStuff() {
     defer termbox.Close()
     termbox.HideCursor()
 
+    client := new(Client)
+
     for {
-        // main loop here.
+        client.Tick()
         termbox.Flush()
     }
 }
