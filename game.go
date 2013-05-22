@@ -4,7 +4,18 @@ import (
 	"math/rand"
 )
 
-const ClockSpeed = 30
+const TickMs = 500 // milliseconds
+// 80x24
+const Empty = ' '
+const Width = 80
+const Height = 24
+
+var Grid GridT
+
+// this is a set. bool is a dummy value
+var Players map[*Player]bool
+
+var NextSymbol = 'A'
 
 type Pos struct {
 	X int
@@ -25,6 +36,7 @@ type Player struct {
 }
 
 func (p *Player) Die() {
+	Grid.ClearSymbol(p.Symbol)
 	p.DeathCount += 1
 }
 
@@ -36,6 +48,16 @@ func (g *GridT) IsEmpty(p Pos) bool {
 
 func (g *GridT) SetCellValue(p Pos, val rune) {
 	g[p.Y][p.X] = val
+}
+
+func (g *GridT) ClearSymbol(symbol rune) {
+	for y := 0; y < Height; y++ {
+		for x := 0; x < Width; x++ {
+			if Grid[y][x] == symbol {
+				Grid[y][x] = Empty
+			}
+		}
+	}
 }
 
 func (g *GridT) GetStartingVector() (pos Pos, dir Pos) {
@@ -62,19 +84,8 @@ func (g *GridT) GetStartingVector() (pos Pos, dir Pos) {
 	return
 }
 
-// 80x24
-const Empty = ' '
-const Width = 80
-const Height = 24
-
-var Grid GridT
-
-var Players map[rune]Player
-
-var NextSymbol = 'A'
-
 func Init() {
-	Players = make(map[rune]Player)
+	Players = make(map[*Player]bool)
 
 	for y := 0; y < Height; y++ {
 		for x := 0; x < Width; x++ {
@@ -83,26 +94,36 @@ func Init() {
 	}
 }
 
-func AddPlayer() rune {
+func AddPlayer() *Player {
 	p := new(Player)
 	p.Symbol = NextSymbol
 	NextSymbol += 1
 
 	p.HeadPos, p.HeadDir = Grid.GetStartingVector()
 
-	Players[p.Symbol] = *p
-	return p.Symbol
+	Players[p] = true
+	return p
 }
 
-func RemovePlayer() {
+func (p *Player) Remove() {
+	Grid.ClearSymbol(p.Symbol)
+	delete(Players, p)
+}
 
+func (p *Player) ChangeDirection(dir Pos) {
+	p.HeadDir = dir
 }
 
 func Step() {
-	for _, p := range Players {
+	for p := range Players {
 		p.TickCount += 1
 
 		p.HeadPos.Add(p.HeadDir)
+
+		// wrap the pos
+		p.HeadPos.X = p.HeadPos.X % Width
+		p.HeadPos.Y = p.HeadPos.Y % Height
+
 		if Grid.IsEmpty(p.HeadPos) {
 			Grid.SetCellValue(p.HeadPos, p.Symbol)
 		} else {

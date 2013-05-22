@@ -1,24 +1,24 @@
 package tronlistener
 
 import (
-    "net"   
-    "sync/atomic"
-    "fmt"
+	"fmt"
+	"net"
+	"sync/atomic"
 )
 
 type Direction int32
 
 const (
-    Stopped Direction = iota
-    North
-    East
-    South
-    West
+	Stopped Direction = 0
+	North             = 65
+	East              = 67
+	South             = 66
+	West              = 68
 )
 
 type Controller struct {
-    conn net.Conn
-    currentDirection Direction
+	conn             net.Conn
+	currentDirection Direction
 }
 
 func (c Controller) read() {
@@ -42,12 +42,12 @@ func (c Controller) read() {
 }
 
 func (c Controller) CurrentDirection() (d Direction) {
-    d = Direction(atomic.LoadInt32((*int32)(&c.currentDirection)))
-    return
+	d = Direction(atomic.LoadInt32((*int32)(&c.currentDirection)))
+	return
 }
 
 func (c Controller) SetCurrentDirection(d Direction) {
-    atomic.StoreInt32((*int32)(&c.currentDirection), int32(d))
+	atomic.StoreInt32((*int32)(&c.currentDirection), int32(d))
 }
 
 func AcceptController(l net.Listener) (c Controller, err error) {
